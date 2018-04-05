@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+  <script>
+    var config = {
+    apiKey: ,
+    authDomain: ,
+    databaseURL: ,
+    projectId: ,
+    storageBucket: ,
+    messagingSenderId:
+    };
+    firebase.initializeApp(config);
+  </script>
+  <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <link rel="stylesheet" href="stylesheet.css">
+  <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+</head>
+<body>
+  <div class="background">
+    <video loop muted autoplay id="bg_video">
+      <source id='vid' src="bg_vids/1.mp4" type="video/mp4">
+   </video>
+   <script>
+     var videos= ["1","1","1","1"],
+     active= videos[Math.round(Math.random() * (videos.length - 1))];
+
+     var player = document.getElementById('bg_video');
+     player.pause();
+
+
+     var current_bg = document.getElementById('vid');
+     current_bg.src="assets/bg_vids/" + active + ".mp4";
+
+     player.load();
+     player.play();
+   </script>
+  </div>
+  <div class="slideshow">
+    <div class="mySlides fade">
+      <div id="image1">
+      </div>
+    </div>
+    <script>
+            var database = firebase.database();
+            var image1ID = document.getElementById("image1");
+            var ref = database.ref().child("Images/image1"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var image = data.child("URL").val();
+
+
+              image1ID.innerHTML = "<img src=\"" + image + "\" width=\"810px\" height=\"460px\">";
+              console.log("src=\"" + image + "\" width=\"612px\" height=\"342px\"");
+            }
+    </script>
+
+    <div class="mySlides fade">
+      <div id="image2">
+      </div>
+    </div>
+    <script>
+            var database = firebase.database();
+            var image2ID = document.getElementById("image2");
+            var ref = database.ref().child("Images/image2"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var image = data.child("URL").val();
+
+
+              image2ID.innerHTML = "<img src=\"" + image + "\" width=\"810px\" height=\"460px\">";
+              console.log("src=\"" + image + "\" width=\"612px\" height=\"342px\"");
+            }
+    </script>
+
+    <div class="mySlides fade">
+      <div id="image3">
+      </div>
+    </div>
+    <script>
+            var database = firebase.database();
+            var image3ID = document.getElementById("image3");
+            var ref = database.ref().child("Images/image3"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var image = data.child("URL").val();
+
+
+              image3ID.innerHTML = "<img src=\"" + image + "\" width=\"810px\" height=\"460px\">";
+              console.log("src=\"" + image + "\" width=\"612px\" height=\"342px\"");
+            }
+    </script>
+  </div>
+
+  <script>
+    var slideIndex = 0;
+    showSlides();
+    function showSlides()
+    {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      for (i = 0; i < slides.length; i++)
+      {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length)
+        {slideIndex = 1}
+
+      slides[slideIndex-1].style.display = "block";
+      setTimeout(showSlides, 5000);
+    }
+    </script>
+  <div class="banner">
+    <div id="the_banner">
+      <br><br><br><br><br><br>
+    </div>
+    <div id="church_name">
+      <h1> Welcome to Faith Gospel Center </h1>
+    </div>
+    <div id="church_address">
+      <h2> 1801 Solano Ave, Vallejo, CA 94590 <br><br> </h2>
+    </div>
+
+    <div id="weather">
+      <div><iframe style="display: block;" src="https://cdnres.willyweather.com/widget/loadView.html?id=79226" width="900" height="92" frameborder="0" scrolling="no"></iframe><a style="float: right;width: 40px;height: 92px;z-index: 1;text-indent: -9999em;margin: -92px 0 0 0;position: relative" href="https://www.willyweather.com/ca/solano-county/vallejo.html" rel="nofollow">vallejo weather forecast</a></div>
+    </div>
+
+  <div class="inner">
+    <div id="birth_anni">
+      <div id="birth_anni_background"> </div>
+      <div id="birth_anni_background2"> </div>
+      <div id="birthday_header">
+        <img id="birthday" src="assets/images/birthday_cake.png" width="100px" height="100px">
+        <div id="birth_border"> </div>
+        <h3 id="birthday_word"> Birthdays </h3>
+      </div>
+
+      <div id="birthday_body">
+        <p id="birth_text"></p>
+        <script>
+          var database = firebase.database();
+          var thisID = document.getElementById("birth_text");
+
+          var ref = database.ref().child("Birthdays"); 
+
+
+          ref.on("child_added", gotData);
+
+
+          function gotData(data)
+          {
+
+            var name = data.child("Name").val();
+            var date = data.child("Date").val();
+            console.log(name, date);
+
+            thisID.innerHTML += name + ' - ' + date + '<hr style="height:5px; visibility:hidden;"/>';
+          }
+        </script>
+      </div>
+
+      <div id="anniversary_header">
+        <img id="anniversary" src="assets/images/91398.png" width="100px" height="100px">
+        <div id="anni_border"> </div>
+        <h3 id="anniversary_word"> Anniversaries </h3>
+      </div>
+       <div id="anniversary_body">
+          <p id="anniversary_text"></p>
+          <script>
+            var database2 = firebase.database();
+            var thisID2 = document.getElementById("anniversary_text");
+
+            var ref = database2.ref().child("Anniversaries"); 
+
+
+            ref.on("child_added", gotData);
+
+
+            function gotData(data)
+            {
+
+              var name = data.child("Name").val();
+              var date = data.child("Date").val();
+              console.log(name, date);
+
+              thisID2.innerHTML += name + ' - ' + date + '<hr style="height:5px; visibility:hidden;"/>';
+            }
+          </script>
+        </div>
+      </div>
+
+    <div id="events_annouce">
+      <div id="events_announce_background"></div>
+      <div id="announce_header">
+        <h2> Announcements </h2>
+      </div>
+      <div id="announcements">
+        <div id="announce1">
+          <div id="announce1_background"></div>
+          <div id="announce1_header">
+            <h3></h3>
+          </div>
+
+          <script>
+          var database = firebase.database();
+          var thisHead1ID = document.getElementById("announce1_header");
+          var ref = database.ref().child("Announcements/announce1"); 
+          ref.on("value", gotData);
+
+
+          function gotData(data)
+          {
+
+            var head = data.child("Header").val();
+            console.log(head);
+
+            thisHead1ID.innerHTML = "<b>" + head + "</b>";
+          }
+        </script>
+
+          <div id="announce1_body">
+            <p></p>
+          </div>
+        </div>
+        <script>
+          var database = firebase.database();
+          var thisBody1ID = document.getElementById("announce1_body");
+          var ref = database.ref().child("Announcements/announce1"); 
+          ref.on("value", gotData);
+
+          function gotData(data)
+          {
+
+            var body = data.child("Body").val();
+            console.log(body);
+
+            thisBody1ID.innerHTML = body;
+          }
+        </script>
+
+
+        <div id="announce2">
+          <div id="announce2_background"></div>
+
+          <div id="announce2_header">
+            <h3></h3>
+          </div>
+
+          <script>
+            var database = firebase.database();
+            var thisHead2ID = document.getElementById("announce2_header");
+            var ref = database.ref().child("Announcements/announce2"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var head = data.child("Header").val();
+              console.log(head);
+
+              thisHead2ID.innerHTML = "<b>" + head + "</b>";
+            }
+          </script>
+
+          <div id="announce2_body">
+             <p></p>
+          </div>
+        </div>
+
+        <script>
+          var database = firebase.database();
+          var thisBody2ID = document.getElementById("announce2_body");
+          var ref = database.ref().child("Announcements/announce2"); 
+          ref.on("value", gotData);
+
+          function gotData(data)
+          {
+
+            var body = data.child("Body").val();
+            console.log(body);
+
+            thisBody2ID.innerHTML = body;
+          }
+        </script>
+
+        <div id="announce3">
+          <div id="announce3_background"></div>
+          <div id="announce3_header">
+            <h3></h3>
+          </div>
+
+          <script>
+            var database = firebase.database();
+            var thisHead3ID = document.getElementById("announce3_header");
+            var ref = database.ref().child("Announcements/announce3"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var head = data.child("Header").val();
+              console.log(head);
+
+              thisHead3ID.innerHTML = "<b>" + head + "</b>";
+            }
+          </script>
+
+          <div id="announce3_body">
+             <p></p>
+          </div>
+        </div>
+        <script>
+          var database = firebase.database();
+          var thisBody3ID = document.getElementById("announce3_body");
+          var ref = database.ref().child("Announcements/announce3"); 
+          ref.on("value", gotData);
+
+          function gotData(data)
+          {
+
+            var body = data.child("Body").val();
+            console.log(body);
+
+            thisBody3ID.innerHTML = body;
+          }
+        </script>
+      </div>
+
+      <div id="events_header">
+        <h2> Upcoming Events </h2>
+      </div>
+      <div id="events">
+        <div id="events_background"></div>
+
+        <div id="date1_background"></div>
+        <div id="date1">
+          <script>
+            var database = firebase.database();
+            var thisdate1ID = document.getElementById("date1");
+            var ref = database.ref().child("Events/event1"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var date = data.child("Date").val();
+
+              thisdate1ID.innerHTML = "<h3>" + date + "</h3>";
+            }
+          </script>
+        </div>
+
+        <div id="event1_background"></div>
+        <div id="date1_event">
+          <script>
+            var database = firebase.database();
+            var thisevent1ID = document.getElementById("date1_event");
+            var ref = database.ref().child("Events/event1"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var event = data.child("Event").val();
+
+              thisevent1ID.innerHTML = "<h3>" + event + "</h3>";
+            }
+          </script>
+        </div>
+
+        <div id="date2_background"></div>
+        <div id="date2">
+          <script>
+            var database = firebase.database();
+            var thisdate2ID = document.getElementById("date2");
+            var ref = database.ref().child("Events/event2"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var date = data.child("Date").val();
+
+              thisdate2ID.innerHTML = "<h3>" + date + "</h3>";
+            }
+          </script>
+        </div>
+
+        <div id="event2_background"></div>
+        <div id="date2_event">
+          <script>
+            var database = firebase.database();
+            var thisevent2ID = document.getElementById("date2_event");
+            var ref = database.ref().child("Events/event2"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var event = data.child("Event").val();
+
+              thisevent2ID.innerHTML = "<h3>" + event + "</h3>";
+            }
+          </script>
+        </div>
+
+        <div id="date3_background"></div>
+        <div id="date3">
+          <script>
+            var database = firebase.database();
+            var thisdate3ID = document.getElementById("date3");
+            var ref = database.ref().child("Events/event3"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var date = data.child("Date").val();
+
+              thisdate3ID.innerHTML = "<h3>" + date + "</h3>";
+            }
+          </script>
+        </div>
+
+        <div id="event3_background"></div>
+        <div id="date3_event">
+          <script>
+            var database = firebase.database();
+            var thisevent3ID = document.getElementById("date3_event");
+            var ref = database.ref().child("Events/event3"); 
+            ref.on("value", gotData);
+
+
+            function gotData(data)
+            {
+
+              var event = data.child("Event").val();
+
+              thisevent3ID.innerHTML = "<h3>" + event + "</h3>";
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+</html>
