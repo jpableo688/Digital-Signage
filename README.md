@@ -60,12 +60,29 @@ This local website is used as a digital signage (also could be named as a kiosk 
    ```
    sudo apt-get install ttf-mscorefonts-installer
    ```
- 3. Now that the digital signage can boot from startup we have to link your own Google Firebase data with the locally run webpage.
-   
-   
+3. Now that the digital signage can boot from startup we have to link your own Google Firebase data with the locally run webpage.
+![Slugpath1](https://raw.githubusercontent.com/jpableo688/Digital-Signage/master/assets/readme/image2.png)
+My database used for this example looks something like this, and I strongly suggest using this format so that the scripts will run properly. 
 
-
+   * The main part of this is to make sure that your API key is set up. Your Firebase key should look something similar to:
+   
+   ```
+   <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+   <script>
+   // Initialize Firebase
+   var config = {
+    apiKey: "UNIQUE KEY HERE",
+    authDomain: "DOMAIN NAME HERE",
+    databaseURL: "URL HERE",
+    projectId: "ID NAME HERE",
+    storageBucket: "ANOTHER LINK HERE",
+    messagingSenderId: "ANOTHER ID HERE"
+   };
+   firebase.initializeApp(config);
+   </script>
+   ```  
+4. Your digital signage should all be set up!
 
 ## Links
-[Setup a Raspberry Pi Kiosk with Chromium](https://obrienlabs.net/setup-raspberry-pi-kiosk-chromium/)
-[Getting Websites to Display Correctly in Midori on Raspbian for the Raspberry PI](https://startingelectronics.org/articles/raspberry-PI/web-browser-fonts/)
+- [Setup a Raspberry Pi Kiosk with Chromium](https://obrienlabs.net/setup-raspberry-pi-kiosk-chromium/)
+- [Getting Websites to Display Correctly in Midori on Raspbian for the Raspberry PI](https://startingelectronics.org/articles/raspberry-PI/web-browser-fonts/)
